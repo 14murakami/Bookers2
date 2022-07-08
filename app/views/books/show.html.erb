@@ -1,0 +1,72 @@
+<div class="container">
+  <div class="row">
+    <div class="col-md-3">
+      <h2>User info</h2>
+
+      <%= image_tag @user.get_profile_image(100,100) %>
+      <table class="table">
+        <tbody>
+          <tr></tr>
+          <tr>
+            <th>name</th>
+            <th><%= @user.name %></th>
+          </tr>
+          <tr>
+            <th>introduction</th>
+            <th><%= @user.introduction %></th>
+          </tr>
+        </tbody>
+      </table>
+
+      <div class="row">
+          <%= link_to edit_user_path(@user), class: "btn btn-outline-secondary btn-block edit_user_path", method: :get do %>
+            <i class="fas fa-user-cog"></i>
+          <% end %>
+      </div>
+
+
+      <%= form_with model: @book, local:true do |f| %>
+        <h2 class="mt-3"> New book </h2>
+        <div class="form-group">
+          <label for="book_title">Titel</label>
+          <%= f.text_field :title, class: "form-control book_title" %>
+        </div>
+
+        <div class="form-group">
+          <label for="book_opinion">Opinion</label>
+          <%= f.text_area :body, class: "form-control book_body" %>
+        </div>
+
+        <div class="form-group">
+          <%= f.submit 'Create Book', class: "btn btn-success" %>
+        </div>
+      <% end %>
+    </div>
+
+    <div class="col-md-8 offset-md-1">
+      <h2>Book detail</h2>
+      <table class ="table">
+        <tbody>
+          <tr>
+            <td>
+              <%= image_tag @user.get_profile_image(80, 80) %><br>
+              <%= link_to @user.name, @user %>
+            </td>
+            <td><%= @books.title %></td>
+            <td><%= @books.body %></td>
+            <td>
+              <% if @books.user == current_user %>
+                <%= link_to "Edit", edit_book_path(@books), class: "btn btn-sm btn-success edit_book_path" %>
+              <% end %>
+            </td>
+            <td>
+              <% if @books.user == current_user %>
+                <%= link_to "Destroy", book_path(@books), method: :delete, class: "btn btn-sm btn-danger destroy_book" %>
+              <% end %>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
